@@ -1,14 +1,32 @@
 import { Strategy } from 'passport-local'
+import UserService from '../../../services/user.service'
+import { User } from '../../../types/user.type'
 import bcrypt from 'bcrypt'
 import boom from '@hapi/boom'
 
-const options = { userNameField: 'email', passwordField: 'password' }
+const options = { usernameField: 'email', passwordField: 'password' }
+const service = new UserService()
 
 const LocalStrategy = new Strategy(options, async (email, password, next) => {
   try {
-    //const user = await service.findByEmail(email)
-    //validar contraseña
+    const user: User = (await service.findByEmail(email)) as unknown as User
+    if (user) {
+      const isMatch = await bcrypt.compare(password, user.password)
+      //console.log('ERROOOOR')
+      delete user.password
+      if (isMatch) {
+        next(null, user)
+      } else {
+        next(boom.unauthorized(), false)
+      }
+    } else {
+      next(boom.unauthorized(), false)
+      //console.log('ERRORR2')
+    }
   } catch (error) {
+    //console.log('ERROOOOOR3')
     next(error, false)
   }
 })
+
+export default LocalStrategy
