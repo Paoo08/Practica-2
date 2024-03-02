@@ -28,4 +28,16 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/', async (req, res, next) => {
+  try {
+    const { name } = req.query
+    const user = await service.findByName(name as string)
+    console.log({ user })
+
+    res.status(200).json({ user })
+  } catch (error) {
+    next(error)
+  }
+})
+
 export default router
