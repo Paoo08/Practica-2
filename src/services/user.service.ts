@@ -23,6 +23,16 @@ class UserService {
     //return newUser
   }
 
+  async find(filters: any) {
+    const user = await Users.find({ ...filters }).catch((error) => {
+      console.log('Could not retrieve user info', error)
+    })
+
+    if (!user) {
+      throw boom.notFound('User not found')
+    }
+    return user
+  }
   async findByEmail(email: string) {
     const user = await Users.findOne({ email }).catch((error) => {
       console.log('Could not retrieve user info', error)

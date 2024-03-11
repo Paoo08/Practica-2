@@ -18,8 +18,8 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const { email } = req.query
-    const user = await service.findByEmail(email as string)
+    const filters = req.query
+    const user = await service.find(filters)
     console.log({ user })
 
     res.status(200).json({ user })
@@ -28,16 +28,28 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/', async (req, res, next) => {
-  try {
-    const { name } = req.query
-    const user = await service.findByName(name as string)
-    console.log({ user })
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const { email } = req.query
+//     const user = await service.findByEmail(email as string)
+//     console.log({ user })
 
-    res.status(200).json({ user })
-  } catch (error) {
-    next(error)
-  }
-})
+//     res.status(200).json({ user })
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const { name } = req.query
+//     const user = await service.findByName(name as string)
+//     console.log({ user })
+
+//     res.status(200).json({ user })
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 export default router
