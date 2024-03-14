@@ -25,7 +25,7 @@ class UserService {
     // return newUserObject
     //delete (newUser as unknown as User).password
     //return newUser
-    newUser.password = undefined
+    //newUser.password = undefined
     return newUser
   }
 
@@ -39,6 +39,7 @@ class UserService {
     }
     return user
   }
+
   async findByEmail(email: string) {
     const user = await Users.findOne({ email }).catch((error) => {
       console.log('Could not retrieve user info', error)

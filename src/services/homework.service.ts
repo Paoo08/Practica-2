@@ -2,7 +2,6 @@ import { ObjectId } from 'mongoose'
 import Homeworks from '../models/homework.model'
 import { Homework, HomeworkModel } from '../types/homework.type'
 import boom from '@hapi/boom'
-import { USER_REFERENCE } from '../models/user.model'
 
 class HomeworkService {
   async create(homework: Homework, userId: ObjectId) {
