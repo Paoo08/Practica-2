@@ -2,7 +2,8 @@ import express from 'express'
 import HomeworkService from '../services/homework.service'
 import { Homework } from '../types/homework.type'
 import passport from 'passport'
-import type { UserRequestType } from '../types/user.type'
+import type { JwtRequestType } from '../types/user.type'
+import { ObjectId } from 'mongoose'
 
 const router = express.Router()
 const service = new HomeworkService()
@@ -10,9 +11,16 @@ const service = new HomeworkService()
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
+  async (req: JwtRequestType, res) => {
+    const {
+      user: { sub }
+    } = req
+    console.log('sub', sub)
     const homework: Homework = req.body
-    const newHomework = await service.create(homework)
+    const newHomework = await service.create(
+      homework,
+      sub as unknown as ObjectId
+    )
 
     res.status(201).json(newHomework)
   }
@@ -21,7 +29,7 @@ router.post(
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
-  async (req: UserRequestType, res, next) => {
+  async (req: JwtRequestType, res, next) => {
     try {
       //console.log('boom error handler', next)
 
