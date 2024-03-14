@@ -52,6 +52,27 @@ class HomeworkService {
       throw boom.notFound('Category not found')
     }
   }
+
+  async changeStatus(name: string, status: string) {
+    const homework = await Homeworks.findOne({ name }).catch((error) => {
+      console.log('Error while connecting to the DB', error)
+    })
+
+    if (!homework) {
+      throw boom.notFound('Homework not found')
+    }
+
+    // Update the status of the homework
+    homework.status = status
+
+    // Save the updated homework
+    const updatedHomework = await homework.save().catch((error) => {
+      console.log('Error while updating the homework', error)
+      throw boom.badImplementation('Error while updating the homework')
+    })
+
+    return updatedHomework
+  }
 }
 
 export default HomeworkService

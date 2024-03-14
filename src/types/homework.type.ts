@@ -8,6 +8,7 @@ export type Homework = {
   description?: string
   dateAssignment?: string
   deadline?: string
+  status?: string
   user: User
 }
 

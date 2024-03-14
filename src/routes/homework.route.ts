@@ -70,4 +70,25 @@ router.get(
   }
 )
 
+router.patch(
+  '/:name/status',
+  passport.authenticate('jwt', { session: false }),
+  async (req: JwtRequestType, res, next) => {
+    try {
+      const { name } = req.params
+      const { status } = req.body
+
+      if (!status) {
+        return res.status(400).json({ error: 'Status is required' })
+      }
+
+      const updatedHomework = await service.changeStatus(name, status)
+
+      res.status(200).json(updatedHomework)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
 export default router

@@ -32,6 +32,11 @@ const Homeworks = new Schema<Homework, HomeworkModel>({
     required: false,
     trim: true
   },
+  status: {
+    type: String,
+    required: false,
+    trim: true
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: USER_REFERENCE
