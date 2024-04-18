@@ -16,6 +16,7 @@ router.post(
     try {
       const { user } = req
       //sub es el id del usuario que se suscribio
+      //Checar aqui
       const payload = { sub: user.id }
       const dbUser = await service.findByEmail(user.email)
       const token = jwt.sign(payload, config.jwtSecret)

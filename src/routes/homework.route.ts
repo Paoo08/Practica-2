@@ -12,10 +12,10 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req: JwtRequestType, res) => {
+    ///const sub = req.user.sub
     const {
       user: { sub }
     } = req
-    console.log('sub', sub)
     const homework: Homework = req.body
     const newHomework = await service.create(
       homework,

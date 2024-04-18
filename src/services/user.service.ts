@@ -55,16 +55,16 @@ class UserService {
     return user
   }
 
-  async findByName(name: string) {
-    const user = await Users.find({ name }).catch((error) => {
-      console.log('Could not retrieve user info', error)
-    })
+  // async findByName(name: string) {
+  //   const user = await Users.find({ name }).catch((error) => {
+  //     console.log('Could not retrieve user info', error)
+  //   })
 
-    if (!user) {
-      throw boom.notFound('User not found')
-    }
-    return user
-  }
+  //   if (!user) {
+  //     throw boom.notFound('User not found')
+  //   }
+  //   return user
+  // }
 }
 
 export default UserService

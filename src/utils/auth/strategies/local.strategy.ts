@@ -15,7 +15,10 @@ const LocalStrategy = new Strategy(options, async (email, password, next) => {
       //console.log('ERROOOOR')
       //delete user.password
       const userObject = (user as any).toJSON()
+      userObject.id = userObject._id
       delete userObject.password
+      delete userObject._id
+
       if (isMatch) {
         next(null, userObject)
       } else {
