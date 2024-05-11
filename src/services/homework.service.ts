@@ -31,6 +31,23 @@ class HomeworkService {
     return homeworks
   }
 
+  async findOne() {
+    try {
+      const homework = await Homeworks.findOne().populate([
+        { path: 'user', strictPopulate: false }
+      ])
+
+      if (!homework) {
+        throw boom.notFound('Homework not found')
+      }
+
+      return homework
+    } catch (error) {
+      console.log('Error while connecting to the DB', error)
+      throw boom.internal('Error while connecting to the DB')
+    }
+  }
+
   async findById(id: string) {
     const homework = await Homeworks.findById(id).catch((error) => {
       console.log('Error while connecting to the DB', error)

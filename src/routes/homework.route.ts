@@ -44,6 +44,20 @@ router.get(
   }
 )
 
+router.get('/findOne', async (req: JwtRequestType, res, next) => {
+  try {
+    //console.log('boom error handler', next)
+
+    const { user } = req
+    console.log(user)
+    const homeworks = await service.findOne()
+    res.status(200).json(homeworks)
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+})
+
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),
